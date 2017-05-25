@@ -5,6 +5,7 @@
 namespace OC\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,12 +23,26 @@ class AdvertController extends Controller
 		return new Response($content);
 	}
 
-	public function byeAction()
+	public function viewAction($id, Request $request)
 	{
-		$content = 
-		$this->get('templating')
-		     ->render('OCPlatformBundle:Advert:bye.html.twig', array('nom' => 'Abel'));
+		$tag = $request->query->get('tag');
 		
-		return new Response($content);
+		return $this->render('OCPlatformBundle:Advert:view.html.twig', array(
+			'id'  => $id,
+			'tag' => $tag,
+		));
+			//"Affichage de l'annonce d'id : " .$id. ", avec le tag : " .$tag);
 	}
+
+	 // On récupère tous les paramètres en arguments de la méthode
+
+    public function viewSlugAction($slug, $year, $_format)
+
+    {
+
+        return new Response(
+        	"On pourrait afficher l'annonce correspondant au 
+        	slug ': ".$slug."', créée en ".$year." et au format ".$_format.".");
+
+    }
 }
